@@ -1,7 +1,4 @@
-from typing import Any
-from django.db.models.query import QuerySet
-from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView, UpdateView
 from .models import ToDoList, ToDoItem
 
 # Create your views here.
@@ -17,7 +14,7 @@ class ItemListView(ListView):
     def get_queryset(self):
         return ToDoItem.objects.filter(todo_list_id=self.kwargs['list_id'])
     
-    def get_context_data(self):
+    def get_context_data(self): # type: ignore
         context = super().get_context_data()
         context["todo_list"] = ToDoList.objects.get(id=self.kwargs["list_id"])
         return context
