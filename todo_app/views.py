@@ -25,7 +25,7 @@ class ListCreate(CreateView):
     model = ToDoList
     fields = ["title"]
     
-    def get_context_data(self):
+    def get_context_data(self): # type: ignore
         context = super(ListCreate, self).get_context_data()
         context["title"] = "Add a new list"
         return context
