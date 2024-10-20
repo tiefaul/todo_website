@@ -1,8 +1,8 @@
 from typing import Any
 from django.db.models.manager import BaseManager
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import ToDoList, ToDoItem
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 # Create your views here.
 
@@ -63,3 +63,20 @@ class ItemUpdate(UpdateView):
     
     def get_success_url(self) -> str:
         return reverse("list", args=[self.object.todo_list_id]) # type: ignore
+    
+class ListDelete(DeleteView):
+    model = ToDoList
+    # You have to use reverse_lazy() instead of reverse()
+    # as the urls are not loaded when the file is imported
+    success_url = reverse_lazy("index")
+
+class ItemDelete(DeleteView):
+    model = ToDoItem
+
+    def get_success_url(self) -> str:
+        return reverse_lazy("list", args=[self.kwargs["list_id"]])
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["todo_list"] = self.object.todo_list # type: ignore
+        return context
