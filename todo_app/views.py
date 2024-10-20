@@ -1,4 +1,5 @@
 from typing import Any
+from django.db.models.manager import BaseManager
 from django.views.generic import ListView, CreateView, UpdateView
 from .models import ToDoList, ToDoItem
 from django.urls import reverse
@@ -13,10 +14,10 @@ class ItemListView(ListView):
     model = ToDoItem
     template_name = 'todo_app/todo_list.html'
 
-    def get_queryset(self):
+    def get_queryset(self) -> BaseManager[ToDoItem]:
         return ToDoItem.objects.filter(todo_list_id=self.kwargs['list_id'])
     
-    def get_context_data(self): # type: ignore
+    def get_context_data(self) -> dict[str, Any]: # type: ignore
         context = super().get_context_data()
         context["todo_list"] = ToDoList.objects.get(id=self.kwargs["list_id"])
         return context
@@ -25,7 +26,7 @@ class ListCreate(CreateView):
     model = ToDoList
     fields = ["title"]
     
-    def get_context_data(self): # type: ignore
+    def get_context_data(self) -> dict[str, Any]: # type: ignore
         context = super(ListCreate, self).get_context_data()
         context["title"] = "Add a new list"
         return context
@@ -40,7 +41,7 @@ class ItemCreate(CreateView):
         initial_data["todo_list"] = todo_list
         return initial_data
     
-    def get_context_data(self): # type: ignore
+    def get_context_data(self) -> dict[str, Any]: # type: ignore
         context = super(ItemCreate, self).get_context_data()
         todo_list = ToDoList.objects.get(id=self.kwargs["list_id"])
         context["todo_list"] = todo_list
