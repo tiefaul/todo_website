@@ -33,4 +33,4 @@ EXPOSE 8000
 
 # Commands to run when container is finished. Seperate each string with a comma.
 
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "mysite.wsgi:application"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "todo_website.wsgi:application"]
