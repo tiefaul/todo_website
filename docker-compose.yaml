@@ -1,0 +1,27 @@
+name: todoapp
+
+services:
+  web: # service name
+    build: # This tells Docker to generate the image directly from the project's Dockerfile instead of using a pre-built one like we did for nginx.
+      context: . # Defines a path to a directory that contains a Dockerfile, or a URL to a git repo.
+      dockerfile: Dockerfile # Can set an alternate Dockerfile. So this file could be called "app.Dockerfile".
+    volumes:
+      - static_volume:/app/static/ # Stores our static files
+      - ./db.sqlite3:/app/db.sqlite3 # Mount the SQLite database file if you want to persist it.
+    expose: # Expose is only used to connect to other services in the Dockerfile
+      - "8000"
+    env_file:
+      - path: ./.env
+    
+  nginx:
+    image: nginx:latest
+    ports: # Ports is used if you want clients/services outside of the Dockerfile to connect.
+      - "80:80"
+    volumes:
+      - static_volume:/app/static # Link the same static files directory
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf # Replace the contents of nginx.conf into the default.conf of nginx.
+    depends_on:
+      - web # Nginx should depend on the web service, it gets built after the web service.
+
+volumes:
+  static_volume: # Create the static_volume
