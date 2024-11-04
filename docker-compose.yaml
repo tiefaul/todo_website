@@ -15,7 +15,7 @@ services:
     
   nginx:
     image: nginx:latest
-    ports: # Ports is used if you want clients/services outside of the Dockerfile to connect.
+    ports: # Ports is used if you want clients/services outside of the docker-compose to connect.
       - "80:80"
     volumes:
       - static_volume:/app/static # Link the same static files directory
