@@ -15,7 +15,7 @@ Follow these instructions to get a copy of the project running on your local mac
 ### Prerequisites
 
 - *Docker* and *Docker Compose* installed
-- Basic knowledge *Django*
+- Basic knowledge of *Django*
 - VSCode (My Recommendation)
 
 ### Installation
