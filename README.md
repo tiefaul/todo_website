@@ -32,7 +32,7 @@ git clone https://github.com/tiefaul/todo_website.git
 touch .env
 ```
 
-use the ```example.env``` as a template to configure your ```.env```. you must specify your IP address and Django secret_key. which I will show you how to generate in the next step
+use the ```example.env``` as a template to configure your ```.env```. You must specify your IP address and Django secret_key. which I will show you how to generate in the next step
 
 3. Generate a Django Secret_Key
 
